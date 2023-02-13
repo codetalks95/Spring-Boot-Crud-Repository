@@ -43,16 +43,24 @@ public class StudentController {
 
     @GetMapping("/findByName/{name}")
     public Response getStudentById(@PathVariable String name) {
+
         return studentService.findByName(name);
     }
 
     @GetMapping("/findBySection/{section}")
     public Response getStudentBySection(@PathVariable String section) {
+
         return studentService.findBySection(section);
     }
+
     @GetMapping("/getSection/{section}")
     public Response getSection(@PathVariable String section) {
         return studentService.getSection(section);
+    }
+
+    @GetMapping("/getName/{name}")
+    public Response getName(@PathVariable String name) {
+        return studentService.getSection(name);
     }
 
     @GetMapping("/findBySchoolName/{schoolName}")
@@ -64,7 +72,8 @@ public class StudentController {
     public Response patchData(@RequestBody StudentEntity entity) {
         return studentService.patchData(entity);
     }
-    @PatchMapping("/updateNameData")
+
+    @PutMapping("/updateNameData")
     public Response updateName(@RequestBody StudentEntity entity) {
         return studentService.updateName(entity);
     }

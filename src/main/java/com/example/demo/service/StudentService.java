@@ -41,7 +41,13 @@ public class StudentService {
 
         return studentRepository.findBySection(section);
     }
-    
+
+    public Response getName(String name) {
+
+        return studentRepository.getName(name);
+    }
+
+
     public Response getSection(String section) {
 
         return studentRepository.getSection(section);
@@ -54,9 +60,9 @@ public class StudentService {
     public Response patchData(StudentEntity entity) {
         return studentRepository.patchData(entity);
     }
-    
+
     public Response updateName(StudentEntity entity) {
         return studentRepository.updateName(entity);
-    } 
+    }
 
 }
