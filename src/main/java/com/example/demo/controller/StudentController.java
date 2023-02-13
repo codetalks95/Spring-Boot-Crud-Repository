@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.StudentEntity;
-import com.example.demo.repository.StudentRepository;
 import com.example.demo.response.Response;
 import com.example.demo.service.StudentService;
 import org.slf4j.Logger;
@@ -49,7 +48,6 @@ public class StudentController {
 
     @GetMapping("/findBySection/{section}")
     public Response getStudentBySection(@PathVariable String section) {
-
         return studentService.findBySection(section);
     }
 
