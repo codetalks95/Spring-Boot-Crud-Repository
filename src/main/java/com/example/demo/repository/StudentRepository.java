@@ -152,6 +152,7 @@ public class StudentRepository {
 		return response;
 	}
 
+<<<<<<< HEAD
 	public Response findBySection(String section) {
 		Response response = new Response();
 		List<StudentEntity> studentEntityList = studentInterface.findBySection(section);
@@ -167,6 +168,23 @@ public class StudentRepository {
 		response.setDateTime(Utility.getDate());
 		return response;
 	}
+=======
+    public Response findByName(String name) {
+        Response response = new Response();
+        List<StudentEntity> studentEntityList = studentInterface.getName(name);
+        if (studentEntityList.isEmpty()) {
+            LOGGER.error("The Data with this Name doesn't exist {}", name);
+            response.setMessage("The Data with this Name" + " " + name + " " + "doesn't exist in Database");
+            response.setStatusCode(HttpStatus.NOT_FOUND);
+        } else {
+            response.setMessage("The Data is Present with this Name" + " " + name);
+            response.setStatusCode(HttpStatus.FOUND);
+            response.setStudentEntityList(studentEntityList);
+        }
+        response.setDateTime(Utility.getDate());
+        return response;
+    }
+>>>>>>> 69830039cae3d34fcec997a54569ad312a0a8aa2
 
 	public Response findBySchoolName(String schoolName) {
 		Response response = new Response();
