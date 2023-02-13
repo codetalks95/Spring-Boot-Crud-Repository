@@ -136,7 +136,7 @@ public class StudentRepository {
 
     public Response findByName(String name) {
         Response response = new Response();
-        List<StudentEntity> studentEntityList = studentInterface.findByName(name);
+        List<StudentEntity> studentEntityList = studentInterface.getName(name);
         if (studentEntityList.isEmpty()) {
             LOGGER.error("The Data with this Name doesn't exist {}", name);
             response.setMessage("The Data with this Name" + " " + name + " " + "doesn't exist in Database");
