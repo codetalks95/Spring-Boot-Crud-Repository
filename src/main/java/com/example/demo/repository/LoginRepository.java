@@ -6,6 +6,7 @@ import com.example.demo.response.LoginResponse;
 
 import java.util.Optional;
 
+import com.example.demo.util.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -18,6 +19,7 @@ public class LoginRepository {
 	public LoginResponse saveUserNamePassword(LoginEntity loginEntity) {
 		LoginResponse loginResponse = new LoginResponse();
 		if (loginEntity != null) {
+			loginEntity.setDate(Utility.getDate());
 			LoginEntity loginEntity1 = loginInterface.save(loginEntity);
 			loginResponse.setStatus(200);
 			loginResponse.setMessage("Details have been Saved Successfully");
@@ -51,6 +53,7 @@ public class LoginRepository {
 		if (log.isPresent()) {
 			log.get().setUserName(loginEntity.getUserName());
 			log.get().setUserPassword(loginEntity.getUserPassword());
+			log.get().setDate(Utility.getDate());
 			LoginEntity login = loginInterface.save(loginEntity);
 			loginResponse.setStatus(200);
 			loginResponse.setMessage("updated");
