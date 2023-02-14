@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.example.demo.entity.StudentEntity;
 import com.example.demo.interfaces.StudentInterface;
-import com.example.demo.response.Response;
+import com.example.demo.response.StudentResponse;
 import com.example.demo.util.Utility;
 
 @Repository
@@ -22,8 +22,8 @@ public class StudentRepository {
     @Autowired
     public StudentInterface studentInterface;
 
-    public Response saveStudentsData(StudentEntity entity) {
-        Response response = new Response();
+    public StudentResponse saveStudentsData(StudentEntity entity) {
+        StudentResponse response = new StudentResponse();
         if (entity != null) {
             StudentEntity student = studentInterface.save(entity);
             if (student.getName() != null && student.getName().equals(entity.getName())) {
@@ -41,8 +41,8 @@ public class StudentRepository {
 
     }
 
-    public Response getStudentById(Integer studentId) {
-        Response response = new Response();
+    public StudentResponse getStudentById(Integer studentId) {
+        StudentResponse response = new StudentResponse();
         Optional<StudentEntity> studentEntity = studentInterface.findById(studentId);
         if (!studentEntity.isPresent()) {
             LOGGER.error("The Data with this ID doesn't exist {}", studentId);
@@ -58,8 +58,8 @@ public class StudentRepository {
         return response;
     }
 
-    public Response delStudentById(Integer studentId) {
-        Response response = new Response();
+    public StudentResponse delStudentById(Integer studentId) {
+        StudentResponse response = new StudentResponse();
         Optional<StudentEntity> studentEntity = studentInterface.findById(studentId);
         if (studentEntity.isPresent()) {
             studentInterface.deleteById(studentId);
@@ -76,8 +76,8 @@ public class StudentRepository {
         return response;
     }
 
-    public Response savePartialData(StudentEntity entity) {
-        Response response = new Response();
+    public StudentResponse savePartialData(StudentEntity entity) {
+        StudentResponse response = new StudentResponse();
         if (entity != null && entity.getID() != 0) {
             StudentEntity studentEntity = new StudentEntity();
             studentEntity.setName(entity.getName());
@@ -100,8 +100,8 @@ public class StudentRepository {
 
     }
 
-    public Response updateData(StudentEntity entity) {
-        Response response = new Response();
+    public StudentResponse updateData(StudentEntity entity) {
+        StudentResponse response = new StudentResponse();
         if (entity != null && entity.getID() != 0) {
             Optional<StudentEntity> studentEntity = studentInterface.findById(entity.getID());
             if (studentEntity.isPresent()) {
@@ -136,8 +136,8 @@ public class StudentRepository {
         return response;
     }
 
-    public Response findByName(String name) {
-        Response response = new Response();
+    public StudentResponse findByName(String name) {
+        StudentResponse response = new StudentResponse();
         List<StudentEntity> studentEntityList = studentInterface.findByName(name);
         if (studentEntityList.isEmpty()) {
             LOGGER.error("The Data with this Name doesn't exist {}", name);
@@ -152,8 +152,8 @@ public class StudentRepository {
         return response;
     }
 
-    public Response findBySection(String section) {
-        Response response = new Response();
+    public StudentResponse findBySection(String section) {
+        StudentResponse response = new StudentResponse();
         List<StudentEntity> studentEntityList = studentInterface.findBySection(section);
         if (studentEntityList.isEmpty()) {
             LOGGER.error("The Data with this Section doesn't exist {}", section);
@@ -169,8 +169,8 @@ public class StudentRepository {
     }
 
 
-    public Response findBySchoolName(String schoolName) {
-        Response response = new Response();
+    public StudentResponse findBySchoolName(String schoolName) {
+        StudentResponse response = new StudentResponse();
         List<StudentEntity> studentEntityList = studentInterface.findBySchoolName(schoolName);
         if (studentEntityList.isEmpty()) {
             LOGGER.error("The Data with this School Name doesn't exist {}", schoolName);
@@ -186,8 +186,8 @@ public class StudentRepository {
         return response;
     }
 
-    public Response patchData(StudentEntity entity) {
-        Response response = new Response();
+    public StudentResponse patchData(StudentEntity entity) {
+        StudentResponse response = new StudentResponse();
         Optional<StudentEntity> studentEntity = studentInterface.findById(entity.getID());
         if (studentEntity.isPresent()) {
             studentEntity.get().setSchoolName(entity.getSchoolName());
@@ -206,8 +206,8 @@ public class StudentRepository {
         return response;
     }
 
-    public Response getSection(String section) {
-        Response response = new Response();
+    public StudentResponse getSection(String section) {
+        StudentResponse response = new StudentResponse();
         List<StudentEntity> studentEntityList = studentInterface.getSection(section);
         if (studentEntityList.isEmpty()) {
             LOGGER.error("The Data with this section doesn't exist {}", section);
@@ -222,8 +222,8 @@ public class StudentRepository {
         return response;
     }
 
-    public Response getName(String name) {
-        Response response = new Response();
+    public StudentResponse getName(String name) {
+        StudentResponse response = new StudentResponse();
         List<StudentEntity> studentEntityList = studentInterface.getName(name);
         if (studentEntityList.isEmpty()) {
             LOGGER.error("The Data with this name doesn't exist {}", name);
@@ -239,8 +239,8 @@ public class StudentRepository {
     }
 
 
-    public Response updateName(StudentEntity entity) {
-        Response response = new Response();
+    public StudentResponse updateName(StudentEntity entity) {
+        StudentResponse response = new StudentResponse();
         if (entity != null && entity.getID() > 0) {
             int studentEntity = studentInterface.updateName(entity.getName(), entity.getSection(), entity.getID());
             if (studentEntity != 0) {

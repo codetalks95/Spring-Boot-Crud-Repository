@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
-public class Response {
+public class StudentResponse {
     private String message;
     private HttpStatus statusCode;
     private StudentEntity studentEntity;
