@@ -14,4 +14,5 @@ public class LoginEntity {
     private Integer id;
     private String userName;
     private String userPassword;
+    private String date;
 }
