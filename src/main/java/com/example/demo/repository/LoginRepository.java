@@ -3,7 +3,11 @@ package com.example.demo.repository;
 import com.example.demo.entity.LoginEntity;
 import com.example.demo.interfaces.LoginInterface;
 import com.example.demo.response.LoginResponse;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.example.demo.util.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,21 +56,24 @@ public class LoginRepository {
 
     public LoginResponse updateUserNamePassword(LoginEntity loginEntity) {
         LoginResponse loginResponse = new LoginResponse();
-        Optional<LoginEntity> log = loginInterface.findById(loginEntity.getId());
-        if (log.isPresent()) {
-            log.get().setUserName(loginEntity.getUserName());
-            log.get().setUserPassword(loginEntity.getUserPassword());
-            log.get().setDate(Utility.getDate());
-            LoginEntity login = loginInterface.save(loginEntity);
+        List<LoginEntity> loginEntityList = loginInterface.findByUserName(loginEntity.getUserName());
+        if (loginEntityList != null && !DuplicateUserPasswordFindingCode(loginEntity, loginEntityList)) {
+            loginEntity.setDate(Utility.getDate());
             loginResponse.setStatus(200);
             loginResponse.setMessage("Details has been updated for the Id" + " " + loginEntity.getId());
-            loginResponse.setLoginEntity(login);
+            loginInterface.save(loginEntity);
+            loginResponse.setLoginEntity(loginEntity);
+            loginResponse.setLoginEntityList(loginEntityList);
         } else {
             loginResponse.setStatus(500);
-            loginResponse.setMessage("Unable to Update Details for the ID" + " " + loginEntity.getId());
-            loginResponse.setLoginEntity(null);
+            loginResponse.setMessage("Previous Used Password is not allowed");
+            loginEntity.setDate(Utility.getDate());
         }
         return loginResponse;
+    }
+
+    private static Boolean DuplicateUserPasswordFindingCode(LoginEntity loginEntity, List<LoginEntity> loginEntityList) {
+        return loginEntityList.stream().anyMatch(c -> c.getUserPassword().equals(loginEntity.getUserPassword()));
     }
 
     public LoginResponse deleteUserNamePassword(Integer Id) {
@@ -78,7 +85,6 @@ public class LoginRepository {
             loginResponse.setLoginEntity(null);
         } else {
             loginInterface.deleteById(Id);
-            ;
             loginResponse.setStatus(200);
             loginResponse.setMessage("Record has been deleted for the ID" + " " + Id);
             loginResponse.setLoginEntity(loginEntity.get());
@@ -88,11 +94,11 @@ public class LoginRepository {
 
     public LoginResponse findByUserName(String userName) {
         LoginResponse loginResponse = new LoginResponse();
-        LoginEntity loginEntityList = loginInterface.findByUserName(userName);
+        List<LoginEntity> loginEntityList = loginInterface.findByUserName(userName);
         if (loginEntityList != null) {
             loginResponse.setStatus(200);
             loginResponse.setMessage("Details are found for the Id" + " " + userName);
-            loginResponse.setLoginEntity(loginEntityList);
+            loginResponse.setLoginEntityList(loginEntityList);
         } else {
             loginResponse.setStatus(500);
             loginResponse.setMessage("Not able to get Record ,Something went wrong");
@@ -103,7 +109,7 @@ public class LoginRepository {
 
     public LoginResponse authenticateByUserName(String userName, String userPassword) {
         LoginResponse loginResponse = new LoginResponse();
-        LoginEntity loginEntityList = loginInterface.findByUserName(userName);
+        LoginEntity loginEntityList = loginInterface.getByUserName(userName);
         if (loginEntityList != null) {
             if (bCryptPasswordEncoder.matches(userPassword, loginEntityList.getUserPassword())) {
                 loginResponse.setStatus(200);
