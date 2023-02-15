@@ -1,12 +1,17 @@
 package com.example.demo.response;
 
+import java.util.List;
+
 import com.example.demo.entity.LoginEntity;
+import com.example.demo.entity.StudentEntity;
 
 public class LoginResponse {
 
     private Integer status;
     private String message;
     private LoginEntity loginEntity;
+    private List<LoginEntity> loginEntityList;
+
 
     public LoginEntity getLoginEntity() {
         return loginEntity;
@@ -30,5 +35,11 @@ public class LoginResponse {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+    public List<LoginEntity> getLoginEntityList() {
+        return loginEntityList;
+    }
+    public void setLoginEntityList(List<LoginEntity> loginEntityList) {
+    	this.loginEntityList=loginEntityList;
     }
 }

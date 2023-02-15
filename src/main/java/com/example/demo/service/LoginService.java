@@ -24,4 +24,10 @@ public class LoginService {
     public LoginResponse deleteUserNamePassword(Integer Id) {
         return loginRepository.deleteUserNamePassword(Id);
     }
+    public LoginResponse findByUserName(String userName) {
+        return loginRepository.findByUserName(userName);
+    }
+    public LoginResponse authenticateByUserName(String userName, String userPassword) {
+        return loginRepository.authenticateByUserName(userName,userPassword);
+    }
 }
