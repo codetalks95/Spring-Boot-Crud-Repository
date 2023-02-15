@@ -16,12 +16,12 @@ public class LoginService {
        return loginRepository.saveUserNamePassword(loginEntity);
     }
     public LoginResponse getUserNamePassword(Integer Id) {
-    	return loginRepository.getUserNamePassword(Id);
+        return loginRepository.getUserNamePassword(Id);
     }
     public LoginResponse updateUserNamePassword(LoginEntity loginEntity) {
     	return loginRepository.updateUserNamePassword(loginEntity);
     }
     public LoginResponse deleteUserNamePassword(Integer Id) {
-    	return loginRepository.deleteUserNamePassword(Id);
+        return loginRepository.deleteUserNamePassword(Id);
     }
 }

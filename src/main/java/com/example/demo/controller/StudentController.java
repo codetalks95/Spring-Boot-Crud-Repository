@@ -46,7 +46,6 @@ public class StudentController {
 
     @GetMapping("/findByName/{name}")
     public StudentResponse getStudentById(@PathVariable String name) {
-
         return studentService.findByName(name);
     }
 

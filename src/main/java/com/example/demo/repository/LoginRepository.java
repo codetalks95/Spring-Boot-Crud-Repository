@@ -19,9 +19,6 @@ public class LoginRepository {
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-
-	//To-Do- Correct the format of Messages
-
 	public LoginResponse saveUserNamePassword(LoginEntity loginEntity) {
 		LoginResponse loginResponse = new LoginResponse();
 		if (loginEntity != null) {
@@ -34,7 +31,7 @@ public class LoginRepository {
 			return loginResponse;
 		}
 		loginResponse.setStatus(500);
-		loginResponse.setMessage("Something went wrong");
+		loginResponse.setMessage("Not able to save Record , Something went wrong");
 		loginResponse.setLoginEntity(null);
 		return loginResponse;
 	}
@@ -44,11 +41,11 @@ public class LoginRepository {
 		Optional<LoginEntity> loginEntity = loginInterface.findById(Id);
 		if (loginEntity.isPresent()) {
 			loginResponse.setStatus(200);
-			loginResponse.setMessage("able to get details");
+			loginResponse.setMessage("Details are found for the Id"+" "+Id);
 			loginResponse.setLoginEntity(loginEntity.get());
 		} else {
 			loginResponse.setStatus(500);
-			loginResponse.setMessage("Something went wrong");
+			loginResponse.setMessage("Not able to get Record ,Something went wrong");
 			loginResponse.setLoginEntity(null);
 		}
 		return loginResponse;
@@ -63,11 +60,11 @@ public class LoginRepository {
 			log.get().setDate(Utility.getDate());
 			LoginEntity login = loginInterface.save(loginEntity);
 			loginResponse.setStatus(200);
-			loginResponse.setMessage("updated");
+			loginResponse.setMessage("Details has been updated for the Id"+" "+loginEntity.getId());
 			loginResponse.setLoginEntity(login);
 		} else {
 			loginResponse.setStatus(500);
-			loginResponse.setMessage("unable to update the data ");
+			loginResponse.setMessage("Unable to Update Details for the ID" +" "+ loginEntity.getId());
 			loginResponse.setLoginEntity(null);
 		}
 		return loginResponse;
@@ -77,12 +74,12 @@ public class LoginRepository {
 		Optional<LoginEntity> loginEntity= loginInterface.findById(Id);
 		if(!loginEntity.isPresent()) {
 			loginResponse.setStatus(500);
-			loginResponse.setMessage("unable to find id to delete data ");
+			loginResponse.setMessage("Unable to find Details for the ID" +" "+Id);
 			loginResponse.setLoginEntity(null);
 		}else {
 			loginInterface.deleteById(Id);;
 			loginResponse.setStatus(200);
-			loginResponse.setMessage("deleted");
+			loginResponse.setMessage("Record has been deleted for the ID" +" "+Id);
 			loginResponse.setLoginEntity(loginEntity.get());
 		}
 		return loginResponse;
