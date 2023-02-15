@@ -12,7 +12,9 @@ public class LoginEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Integer id;
+    @Column(unique = true , nullable = false)
     private String userName;
+    @Column(nullable = false)
     private String userPassword;
     private String date;
 }
