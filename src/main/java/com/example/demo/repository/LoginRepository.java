@@ -4,6 +4,7 @@ import com.example.demo.entity.LoginEntity;
 import com.example.demo.interfaces.LoginInterface;
 import com.example.demo.response.LoginResponse;
 
+import java.util.List;
 import java.util.Optional;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.example.demo.util.Utility;
@@ -83,6 +84,34 @@ public class LoginRepository {
 			loginResponse.setLoginEntity(loginEntity.get());
 		}
 		return loginResponse;
-
+	}
+	public LoginResponse findByUserName(String  userName) {
+		LoginResponse loginResponse = new LoginResponse();
+		List<LoginEntity> loginEntityList = loginInterface.findByUserName(userName);
+		if (loginEntityList.isEmpty()) {
+			loginResponse.setStatus(500);
+			loginResponse.setMessage("Not able to get Record ,Something went wrong");
+			loginResponse.setLoginEntity(null);
+			
+		} else {
+			loginResponse.setStatus(200);
+			loginResponse.setMessage("Details are found for the Id"+" "+ userName);
+			loginResponse.setLoginEntityList(loginEntityList);
+		}
+		return loginResponse;
+	}
+	public LoginResponse findByUserNamePassword(String userName, String userPassword) {
+		 LoginResponse loginResponse = new LoginResponse();
+ List<LoginEntity> loginEntityList=loginInterface.findByUserNamePassword(userName, userPassword);
+		 if(loginEntityList.isEmpty()) {
+			 loginResponse.setStatus(500);
+				loginResponse.setMessage("Not able to get Record ,Something went wrong");
+				loginResponse.setLoginEntity(null);
+		 }else {
+			 if(loginEntityList.equals(userPassword)) {
+				 
+			 }
+		 }
+			 
 	}
 }

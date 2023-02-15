@@ -38,4 +38,12 @@ public class LoginController {
     public LoginResponse deleteUserNamePassword(@PathVariable Integer Id) {
         return loginService.deleteUserNamePassword(Id);
     }
+    @GetMapping("/findByUserName/{userName}")
+    public LoginResponse findByUserName(@PathVariable String userName) {
+        return loginService.findByUserName(userName);
+    }
+    @GetMapping("/findByUserNamePassword/{userName}")
+    public LoginResponse findByUserNamePassword(@PathVariable String userName, String userPassword) {
+        return loginService.findByUserNamePassword(userName, userPassword);
+    }
 }
