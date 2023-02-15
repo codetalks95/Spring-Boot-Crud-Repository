@@ -111,7 +111,7 @@ public class LoginRepository {
             if (bCryptPasswordEncoder.matches(userPassword, loginEntityList.getUserPassword())) {
                 loginResponse.setStatus(200);
                 loginResponse.setMessage("Password Matched Authentication Successful");
-                loginResponse.setLoginEntity(null);
+                loginResponse.setLoginEntity(loginEntityList);
             } else {
                 loginResponse.setStatus(500);
                 loginResponse.setMessage("Password Matched Authentication failed");
