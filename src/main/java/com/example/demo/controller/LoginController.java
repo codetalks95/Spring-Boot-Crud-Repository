@@ -45,7 +45,7 @@ public class LoginController {
     }
 
     @GetMapping("/authenticateByUserName/{userName}/{userPassword}")
-    public LoginResponse authenticateByUserName(@PathVariable String userName, String userPassword) {
+    public LoginResponse authenticateByUserName(@PathVariable String userName,@PathVariable  String userPassword) {
         return loginService.authenticateByUserName(userName, userPassword);
     }
 }
