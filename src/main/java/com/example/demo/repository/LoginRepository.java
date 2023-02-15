@@ -3,10 +3,7 @@ package com.example.demo.repository;
 import com.example.demo.entity.LoginEntity;
 import com.example.demo.interfaces.LoginInterface;
 import com.example.demo.response.LoginResponse;
-
-import java.util.List;
 import java.util.Optional;
-
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.example.demo.util.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
