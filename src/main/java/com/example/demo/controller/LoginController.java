@@ -1,4 +1,4 @@
-package com.example.demo.loginController;
+package com.example.demo.controller;
 
 import com.example.demo.entity.LoginEntity;
 import com.example.demo.response.LoginResponse;
@@ -14,26 +14,28 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin
 public class LoginController {
 
     @Autowired
     private LoginService loginService;
 
     @PostMapping("/saveUserNamePassword")
-    public LoginResponse saveUserNamePassword(@RequestBody LoginEntity loginEntity){
+    public LoginResponse saveUserNamePassword(@RequestBody LoginEntity loginEntity) {
         return loginService.saveUserNamePassword(loginEntity);
     }
+
     @GetMapping("/getUserNamePassword/{Id}")
     public LoginResponse getUserNamePassword(@PathVariable Integer Id) {
-    	return loginService.getUserNamePassword(Id);
+        return loginService.getUserNamePassword(Id);
     }
+
     @PutMapping("/updateUserNamePassword")
     public LoginResponse updateUserNamePassword(@RequestBody LoginEntity loginEntity) {
-    	return loginService.updateUserNamePassword(loginEntity);
+        return loginService.updateUserNamePassword(loginEntity);
     }
+
     @DeleteMapping("/deleteUserNamePassword/{Id}")
     public LoginResponse deleteUserNamePassword(@PathVariable Integer Id) {
-    	return loginService.deleteUserNamePassword(Id);
+        return loginService.deleteUserNamePassword(Id);
     }
 }

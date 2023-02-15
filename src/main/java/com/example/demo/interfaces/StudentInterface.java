@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
 public interface StudentInterface extends JpaRepository<StudentEntity, Integer> {
 
 	List<StudentEntity> findByName(String name);

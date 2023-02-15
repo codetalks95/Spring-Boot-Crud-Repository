@@ -5,7 +5,6 @@ import com.example.demo.repository.LoginRepository;
 import com.example.demo.response.LoginResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 public class LoginService {

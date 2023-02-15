@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.StudentEntity;
 import com.example.demo.response.StudentResponse;
+import com.example.demo.service.LoginService;
 import com.example.demo.service.StudentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,9 @@ public class StudentController {
 
     @Autowired
     public StudentService studentService;
+
+    @Autowired
+    private LoginService loginService;
 
     @PostMapping("/savedStudents")
     public StudentResponse saveStudentInfo(@RequestBody StudentEntity entity) {
@@ -75,4 +79,5 @@ public class StudentController {
     public StudentResponse updateName(@RequestBody StudentEntity entity) {
         return studentService.updateName(entity);
     }
+
 }
