@@ -27,7 +27,7 @@ public class LoginService {
     public LoginResponse findByUserName(String userName) {
         return loginRepository.findByUserName(userName);
     }
-    public LoginResponse findByUserNamePassword(String userName, String userPassword) {
-        return loginRepository.findByUserNamePassword(userName,userPassword);
+    public LoginResponse authenticateByUserName(String userName, String userPassword) {
+        return loginRepository.authenticateByUserName(userName,userPassword);
     }
 }
