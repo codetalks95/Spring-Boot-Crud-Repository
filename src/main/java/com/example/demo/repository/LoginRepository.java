@@ -73,10 +73,13 @@ public class LoginRepository {
         return loginResponse;
     }
 
-
-
     private static Boolean DuplicateUserPasswordFindingCode(LoginEntity loginEntity, List<LoginEntity> loginEntityList) {
-        return loginEntityList.stream().anyMatch(c -> c.getUserPassword().equals(loginEntity.getUserPassword()));
+        for (LoginEntity login : loginEntityList) {
+            if (login.getUserPassword().equals(loginEntity.getUserPassword())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public LoginResponse deleteUserNamePassword(Integer Id) {
