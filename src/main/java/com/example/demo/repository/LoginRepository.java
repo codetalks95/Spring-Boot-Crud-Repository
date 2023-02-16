@@ -53,6 +53,7 @@ public class LoginRepository {
         }
         return loginResponse;
     }
+    //To-Do:- Write logic for not having duplicate userName.
 
     public LoginResponse updateUserNamePassword(LoginEntity loginEntity) {
         LoginResponse loginResponse = new LoginResponse();
@@ -71,6 +72,8 @@ public class LoginRepository {
         }
         return loginResponse;
     }
+
+
 
     private static Boolean DuplicateUserPasswordFindingCode(LoginEntity loginEntity, List<LoginEntity> loginEntityList) {
         return loginEntityList.stream().anyMatch(c -> c.getUserPassword().equals(loginEntity.getUserPassword()));
