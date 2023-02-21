@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.StudentEntity;
 import com.example.demo.response.StudentResponse;
-import com.example.demo.service.LoginService;
 import com.example.demo.service.StudentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,14 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/controller")
 public class StudentController {
     private static final Logger LOGGER = LoggerFactory.getLogger(StudentController.class);
 
     @Autowired
     public StudentService studentService;
-
-    @Autowired
-    private LoginService loginService;
 
     @PostMapping("/savedStudents")
     public StudentResponse saveStudentInfo(@RequestBody StudentEntity entity) {
