@@ -4,7 +4,6 @@ import com.example.demo.entity.LoginEntity;
 import com.example.demo.response.LoginResponse;
 import com.example.demo.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
