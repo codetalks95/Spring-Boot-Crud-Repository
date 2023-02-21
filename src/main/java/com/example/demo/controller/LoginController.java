@@ -4,13 +4,8 @@ import com.example.demo.entity.LoginEntity;
 import com.example.demo.response.LoginResponse;
 import com.example.demo.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class LoginController {
@@ -18,7 +13,7 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
 
-    @PostMapping("/saveUserNamePassword")
+    @RequestMapping(method = RequestMethod.POST, value = "/saveUserNamePassword",  produces = { "application/xml" })
     public LoginResponse saveUserNamePassword(@RequestBody LoginEntity loginEntity) {
         return loginService.saveUserNamePassword(loginEntity);
     }
@@ -44,7 +39,7 @@ public class LoginController {
     }
 
     @GetMapping("/authenticateByUserName/{userName}/{userPassword}")
-    public LoginResponse authenticateByUserName(@PathVariable String userName,@PathVariable  String userPassword) {
+    public LoginResponse authenticateByUserName(@PathVariable String userName, @PathVariable String userPassword) {
         return loginService.authenticateByUserName(userName, userPassword);
     }
 }

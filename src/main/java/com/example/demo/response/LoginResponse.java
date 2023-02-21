@@ -3,7 +3,6 @@ package com.example.demo.response;
 import java.util.List;
 
 import com.example.demo.entity.LoginEntity;
-import com.example.demo.entity.StudentEntity;
 
 public class LoginResponse {
 

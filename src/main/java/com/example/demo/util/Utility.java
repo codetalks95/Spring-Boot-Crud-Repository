@@ -1,6 +1,5 @@
 package com.example.demo.util;
 
-import com.example.demo.controller.StudentController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
