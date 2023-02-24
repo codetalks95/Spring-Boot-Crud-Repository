@@ -15,4 +15,5 @@ public class LoginEntity {
     private String userName;
     private String userPassword;
     private String date;
+    private String developer;
 }

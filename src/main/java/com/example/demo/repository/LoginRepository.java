@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.example.demo.util.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class LoginRepository {
+
+    @Value("${developer}")
+    private String developer;
 
     @Autowired
     private LoginInterface loginInterface;
@@ -27,6 +31,7 @@ public class LoginRepository {
         if (loginEntity != null) {
             loginEntity.setUserPassword(bCryptPasswordEncoder.encode(loginEntity.getUserPassword()));
             loginEntity.setDate(Utility.getDate());
+            loginEntity.setDeveloper(developer);
             LoginEntity loginEntity1 = loginInterface.save(loginEntity);
             loginResponse.setStatus(200);
             loginResponse.setMessage("Details have been Saved Successfully");
@@ -60,6 +65,7 @@ public class LoginRepository {
         List<LoginEntity> loginEntityList = loginInterface.findByUserName(loginEntity.getUserName());
         if (loginEntityList != null && !DuplicateUserPasswordFindingCode(loginEntity, loginEntityList)) {
             loginEntity.setDate(Utility.getDate());
+            loginEntity.setDeveloper(developer);
             loginResponse.setStatus(200);
             loginResponse.setMessage("Details has been updated for the Id" + " " + loginEntity.getId());
             loginInterface.save(loginEntity);
@@ -69,6 +75,7 @@ public class LoginRepository {
             loginResponse.setStatus(500);
             loginResponse.setMessage("Previous Used Password is not allowed");
             loginEntity.setDate(Utility.getDate());
+            loginEntity.setDeveloper(developer);
         }
         return loginResponse;
     }
