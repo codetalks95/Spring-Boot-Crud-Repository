@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/controller")
 public class StudentController {
@@ -31,9 +33,9 @@ public class StudentController {
         return studentService.delStudentById(studentId);
     }
 
-    @PatchMapping("/updatePartialData")
-    public StudentResponse savePartialStudentData(@RequestBody StudentEntity entity) {
-        return studentService.savePartialData(entity);
+    @PatchMapping("/updatePartialData/{id}")
+    public StudentResponse savePartialStudentData(@PathVariable Integer id,@RequestBody Map<String, Object> entity) {
+        return studentService.savePartialData(id, entity);
     }
 
     @PutMapping("/updateData")
@@ -66,9 +68,9 @@ public class StudentController {
         return studentService.findBySchoolName(schoolName);
     }
 
-    @PatchMapping("/patchData")
-    public StudentResponse patchData(@RequestBody StudentEntity entity) {
-        return studentService.patchData(entity);
+    @PatchMapping("/patchData/{id}")
+    public StudentResponse patchData(@PathVariable Integer id , @RequestBody Map<String , Object> entity) {
+        return studentService.patchData(id,entity);
     }
 
     @PutMapping("/updateNameData")

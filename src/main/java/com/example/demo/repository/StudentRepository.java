@@ -1,6 +1,8 @@
 package com.example.demo.repository;
 
+import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -13,6 +15,7 @@ import com.example.demo.entity.StudentEntity;
 import com.example.demo.interfaces.StudentInterface;
 import com.example.demo.response.StudentResponse;
 import com.example.demo.util.Utility;
+import org.springframework.util.ReflectionUtils;
 
 @Repository
 public class StudentRepository {
@@ -67,8 +70,7 @@ public class StudentRepository {
             response.setStatusCode(HttpStatus.ACCEPTED);
         } else {
             LOGGER.debug("The Debug Started with this Id {}", studentId);
-            response.setMessage(
-                    "The Data with this ID" + " " + studentId + " " + "Is already deleted or not available");
+            response.setMessage("The Data with this ID" + " " + studentId + " " + "Is already deleted or not available");
             response.setStatusCode(HttpStatus.NOT_FOUND);
         }
         response.setStudentEntity(studentEntity.get());
@@ -76,28 +78,18 @@ public class StudentRepository {
         return response;
     }
 
-    public StudentResponse savePartialData(StudentEntity entity) {
-        StudentResponse response = new StudentResponse();
-        if (entity != null && entity.getID() != 0) {
-            StudentEntity studentEntity = new StudentEntity();
-            studentEntity.setName(entity.getName());
-            studentEntity.setSection(entity.getSection());
-            studentEntity.setID(entity.getID());
-            studentEntity.setSchoolName(entity.getSchoolName());
-            StudentEntity student = studentInterface.save(studentEntity);
-            if (student.getID() != 0) {
-                response.setMessage("Partial Data Saved" + " " + student.getID());
-                response.setStatusCode(HttpStatus.ACCEPTED);
-                response.setStudentEntity(student);
-            } else {
-                response.setMessage("The Data has Not Been Saved or already Exists");
-                response.setStatusCode(HttpStatus.ALREADY_REPORTED);
-                response.setStudentEntity(null);
-            }
-            response.setDateTime(Utility.getDate());
-        }
-        return response;
+    public StudentEntity updateProductByFields(int id, Map<String, Object> fields) {
+        Optional<StudentEntity> existingProduct = studentInterface.findById(id);
 
+        if (!existingProduct.isPresent()) {
+            return null;
+        }
+        fields.forEach((key, value) -> {
+            Field field = ReflectionUtils.findField(StudentEntity.class, key);
+            field.setAccessible(true);
+            ReflectionUtils.setField(field, existingProduct.get(), value);
+        });
+        return studentInterface.save(existingProduct.get());
     }
 
     public StudentResponse updateData(StudentEntity entity) {
@@ -174,8 +166,7 @@ public class StudentRepository {
         List<StudentEntity> studentEntityList = studentInterface.findBySchoolName(schoolName);
         if (studentEntityList.isEmpty()) {
             LOGGER.error("The Data with this School Name doesn't exist {}", schoolName);
-            response.setMessage(
-                    "The Data with this School Name" + " " + schoolName + " " + "doesn't exist in Database");
+            response.setMessage("The Data with this School Name" + " " + schoolName + " " + "doesn't exist in Database");
             response.setStatusCode(HttpStatus.NOT_FOUND);
         } else {
             response.setMessage("The Data is Present with this Name" + " " + schoolName);
@@ -186,24 +177,25 @@ public class StudentRepository {
         return response;
     }
 
-    public StudentResponse patchData(StudentEntity entity) {
-        StudentResponse response = new StudentResponse();
-        Optional<StudentEntity> studentEntity = studentInterface.findById(entity.getID());
-        if (studentEntity.isPresent()) {
-            studentEntity.get().setSchoolName(entity.getSchoolName());
-            StudentEntity student = studentInterface.save(studentEntity.get());
-            if (student.getID() != 0) {
-                response.setMessage("Partial Data Saved" + " " + student.getID());
-                response.setStatusCode(HttpStatus.ACCEPTED);
-                response.setStudentEntity(student);
-            } else {
-                response.setMessage("The Data has Not Been Saved or already Exists");
-                response.setStatusCode(HttpStatus.ALREADY_REPORTED);
-                response.setStudentEntity(null);
-            }
-            response.setDateTime(Utility.getDate());
+    public StudentResponse patchData(Integer id, Map<String, Object> entity) {
+        StudentResponse studentResponse = new StudentResponse();
+        Optional<StudentEntity> studentData = studentInterface.findById(id);
+        if (!studentData.isPresent()) {
+            studentResponse.setMessage("Entity is Null");
+            studentResponse.setStudentEntity(null);
+            studentResponse.setStatusCode(HttpStatus.NOT_FOUND);
+            return studentResponse;
         }
-        return response;
+        entity.forEach((key, value) -> {
+            Field field = ReflectionUtils.findField(StudentEntity.class, key);
+            field.setAccessible(true);
+            ReflectionUtils.setField(field, studentData.get(), value);
+        });
+        studentInterface.save(studentData.get());
+        studentResponse.setMessage("Partial Data has been Updated");
+        studentResponse.setStudentEntity(studentData.get());
+        studentResponse.setStatusCode(HttpStatus.OK);
+        return studentResponse;
     }
 
     public StudentResponse getSection(String section) {
@@ -257,4 +249,25 @@ public class StudentRepository {
         return response;
     }
 
+    public StudentResponse savePartialData(Integer id, Map<String, Object> fields) {
+        StudentResponse studentResponse = new StudentResponse();
+        Optional<StudentEntity> studentData = studentInterface.findById(id);
+
+        if (!studentData.isPresent()) {
+            studentResponse.setMessage("Entity is Null");
+            studentResponse.setStudentEntity(null);
+            studentResponse.setStatusCode(HttpStatus.NOT_FOUND);
+            return studentResponse;
+        }
+        fields.forEach((key, value) -> {
+            Field field = ReflectionUtils.findField(StudentEntity.class, key);
+            field.setAccessible(true);
+            ReflectionUtils.setField(field, studentData.get(), value);
+        });
+        studentInterface.save(studentData.get());
+        studentResponse.setMessage("Partial Data has been Updated");
+        studentResponse.setStudentEntity(studentData.get());
+        studentResponse.setStatusCode(HttpStatus.OK);
+        return studentResponse;
+    }
 }

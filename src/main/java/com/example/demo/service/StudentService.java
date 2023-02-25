@@ -6,6 +6,8 @@ import com.example.demo.response.StudentResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+
 @Service
 public class StudentService {
 
@@ -24,8 +26,8 @@ public class StudentService {
         return studentRepository.delStudentById(studentId);
     }
 
-    public StudentResponse savePartialData(StudentEntity entity) {
-        return studentRepository.savePartialData(entity);
+    public StudentResponse savePartialData(Integer id ,Map<String, Object> entity) {
+        return studentRepository.savePartialData(id , entity );
     }
 
     public StudentResponse updateData(StudentEntity entity) {
@@ -52,8 +54,8 @@ public class StudentService {
         return studentRepository.findBySchoolName(schoolName);
     }
 
-    public StudentResponse patchData(StudentEntity entity) {
-        return studentRepository.patchData(entity);
+    public StudentResponse patchData(Integer id , Map<String,Object> entity) {
+        return studentRepository.patchData(id , entity);
     }
 
     public StudentResponse updateName(StudentEntity entity) {
